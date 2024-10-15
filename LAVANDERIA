@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Lavanderia</title>
+    <style>
+        /* Define a fonte principal do corpo da página. */
+        body {
+            font-family: Arial, sans-serif;
+            /* Adiciona uma margem de 10px ao redor do corpo. */
+            margin: 10px;
+            /* Remove o preenchimento padrão do corpo. */
+            padding: 0;
+            /* Define uma cor de fundo cinza claro para o corpo da página. */
+            background-color: #f4f4f4;
+        }
+
+        /* Define uma largura máxima de 1150px para o container. */
+        .container {
+            max-width: 1150px;
+            /* Centraliza o container horizontalmente. */
+            margin: 0 auto;
+            /* Define o fundo branco para o container. */
+            background-color: #ffffff;
+            /* Adiciona um preenchimento interno de 10px dentro do container. */
+            padding: 10px;
+            /* Adiciona cantos arredondados com um raio de 15px. */
+            border-radius: 8px;
+            /* Adiciona uma sombra suave ao redor do container. */
+            box-shadow: 0 0 15px rgba(68, 101, 207, 0.1);
+        }
+
+        /* Exibe os elementos da `.input-group` em linha (flexbox). */
+        .input-group {
+            display: flex;
+            /* Distribui espaço uniformemente entre os elementos, empurrando-os para as extremidades. */
+            justify-content: space-between;
+            /* Adiciona um espaço inferior de 15px entre os grupos de entrada. */
+            margin-bottom: 5px;
+        }
+
+        /* Define uma largura fixa de 100px para o rótulo (label). */
+        .input-group label {
+            width: 100px;
+            /* Adiciona um leve preenchimento interno de 1px ao rótulo. */
+            padding: 1px;
+        }
+
+        /* Define a largura do input para 60% do container, menos 110px (para alinhar com o label). */
+        .input-group input {
+            width: calc(60% - 110px);
+            /* Adiciona um preenchimento interno de 5px dentro do campo de input. */
+            padding: 5px;
+            /* Define uma borda cinza clara ao redor do campo de input. */
+            border: 1px solid #ddd;
+            /* Adiciona cantos levemente arredondados com um raio de 4px ao campo de input. */
+            border-radius: 4px;
+        }
+
+        /* Define a cor azul (#2e6da4) para os títulos h1 e h2. */
+        h1,
+        h2 {
+            color: #2e6da4;
+            /* Centraliza o texto dos títulos h1 e h2. */
+            text-align: center;
+        }
+
+        /* Define a cor azul (#2e6da4) para os rótulos (labels). */
+        label {
+            color: #2e6da4;
+            /* Impede que o texto dentro do rótulo quebre em uma nova linha. */
+            white-space: nowrap;
+        }
+
+        /* Define a cor azul (#2e6da4) para os parágrafos. */
+        p {
+            color: #2e6da4;
+        }
+
+        /* Define a largura específica das colunas */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 15%;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 10%;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 10%;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 10%;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 10%;
+            font-size: 12px;
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 10%;
+            font-size: 12px;
+        }
+
+        /* Define a altura das células da tabela */
+        td {
+            height: 10px;
+        }
+
+        /* Define a largura e o layout da tabela */
+        .table-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1px;
+            overflow: auto;
+            /* Para permitir rolagem se necessário */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            /* Remove os espaços entre as bordas das células */
+            margin-bottom: 20px;
+            margin-top: 9px;
+            table-layout: fixed;
+            /* Previne que as colunas mudem de largura */
+        }
+
+        /* Define as bordas da tabela e das células */
+        table,
+        th,
+        td {
+            border: 2px solid #ddd;
+            /* Borda cinza clara */
+        }
+
+        /* Define o preenchimento e a centralização das células */
+        th,
+        td {
+            padding: 2px;
+            /* Preenchimento interno */
+            text-align: center;
+            /* Centraliza o texto */
+            font-size: 12px;
+            /* Tamanho da fonte */
+        }
+
+        /* Define o estilo dos cabeçalhos da tabela */
+        th {
+            background-color: #2e6da4;
+            /* Cor de fundo azul para cabeçalhos */
+            color: white;
+            /* Cor do texto dos cabeçalhos como branco */
+            font-size: 12px;
+            /* Tamanho da fonte dos cabeçalhos */
+        }
+
+        /* Estilo do botão de impressão */
+        #imprimirBtn {
+            width: 8cm;
+            /* Tamanho da largura */
+            height: 1cm;
+            /* Tamanho da altura */
+            background-color: #416ce0;
+            /* Cor de fundo azul */
+            color: white;
+            /* Cor da letra */
+            border: none;
+            /* Remove a borda padrão */
+            border-radius: 12px;
+            /* Cantos arredondados */
+            font-size: 16px;
+            /* Tamanho da fonte */
+            cursor: pointer;
+            /* Cursor de ponteiro */
+        }
+
+        /* Estilo para o botão ao passar o mouse */
+        #imprimirBtn:hover {
+            background-color: #9690ce;
+            /* Cor ao passar o mouse */
+        }
+
+        /* Garante que a quebra de página ocorra antes deste elemento */
+        .pagebreak {
+            page-break-before: always;
+            /* Garante que a quebra de página ocorra antes deste elemento */
+            margin: 0;
+            /* Remover margens, se necessário */
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 5px;
+                max-width: 100%;
+            }
+
+            .input-group label {
+                width: 100%;
+            }
+
+            .input-group input {
+                width: 100%;
+            }
+        }
+    </style>
+
+</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+<body>
+    <div id="conteudoRelatorio">
+        <div class="container">
+            <h1>Relatório de Lavanderia</h1>
+
+            <div class="input-group">
+                <label for="NomeCliente">Nome do Cliente:</label>
+                <input type="text" id="NomeCliente" placeholder="Digite o nome do cliente">
+            </div>
+
+            <div class="input-group">
+                <label for="dataInicial">Data Inicial:</label>
+                <input type="date" id="dataInicial">
+            </div>
+
+            <div class="input-group">
+                <label for="dataFinal">Data Final:</label>
+                <input type="date" id="dataFinal">
+            </div>
+
+            <p>Total de dias analisados: <span id="totalDias">0</span> dias</p>
+
+            <h2 style="display: flex; align-items: center; justify-content: center;">
+                Máquina
+                <input type="text" id="inputMaquina1" placeholder="MÁQUINA" value="1"
+                    style="padding: 5px; font-size: 12px; margin-left: 10px; width: 150px;font-size: 12px;text-align: center;">
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Processo</th>
+                        <th>Executado (N.)</th>
+                        <th>Cancelado (N.)</th>
+                        <th>Capacidade (KG)</th>
+                        <th>Total Lavado (Kg)</th>
+                        <th>% de Lavagem</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela1">
+                    <tr id="linha1">
+                        <td><input type="text" style="width: 90%; " value="LEVE"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha2">
+                        <td><input type="text" style="width: 90%;" value="PESADO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha3">
+                        <td><input type="text" style="width: 90%;" value="COBERTOR"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha4">
+                        <td><input type="text" style="width: 90%;" value="PANO DE CHÃO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha5">
+                        <td><input type="text" style="width: 90%;" value="COMPRESSAS"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Texto para mostrar o total -->
+            <h3 style="text-align: center; margin-top: 20px;">
+                TOTAL DE KG LAVADO NA MÁQUINA 1: <span id="totalGeralKgLavado1">0</span> KG
+            </h3>
+
+            <h2 style="display: flex; align-items: center; justify-content: center;">
+                Máquina
+                <input type="text" id="inputMaquina1" placeholder="MÁQUINA" value="2"
+                    style="padding: 5px; font-size: 12px; margin-left: 10px; width: 150px;font-size: 12px;text-align: center;">
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Processo</th>
+                        <th>Executado (N.)</th>
+                        <th>Cancelado (N.)</th>
+                        <th>Capacidade (KG)</th>
+                        <th>Total Lavado (Kg)</th>
+                        <th>% de Lavagem</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela2">
+                    <tr id="linha1">
+                        <td><input type="text" style="width: 90%; " value="LEVE"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha2">
+                        <td><input type="text" style="width: 90%;" value="PESADO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha3">
+                        <td><input type="text" style="width: 90%;" value="COBERTOR"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha4">
+                        <td><input type="text" style="width: 90%;" value="PANO DE CHÃO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha5">
+                        <td><input type="text" style="width: 90%;" value="COMPRESSAS"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Texto para mostrar o total -->
+            <h3 style="text-align: center; margin-top: 20px;">
+                TOTAL DE KG LAVADO NA MÁQUINA 2: <span id="totalGeralKgLavado2">0</span> KG
+            </h3>
+
+            <h2 style="display: flex; align-items: center; justify-content: center;">
+                Máquina
+                <input type="text" id="inputMaquina1" placeholder="MÁQUINA" value="3"
+                    style="padding: 5px; font-size: 12px; margin-left: 10px; width: 150px;font-size: 12px;text-align: center;">
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Processo</th>
+                        <th>Executado (N.)</th>
+                        <th>Cancelado (N.)</th>
+                        <th>Capacidade (KG)</th>
+                        <th>Total Lavado (Kg)</th>
+                        <th>% de Lavagem</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela3">
+                    <tr id="linha1">
+                        <td><input type="text" style="width: 90%; " value="LEVE"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha2">
+                        <td><input type="text" style="width: 90%;" value="PESADO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha3">
+                        <td><input type="text" style="width: 90%;" value="COBERTOR"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha4">
+                        <td><input type="text" style="width: 90%;" value="PANO DE CHÃO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha5">
+                        <td><input type="text" style="width: 90%;" value="COMPRESSAS"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Texto para mostrar o total -->
+            <h3 style="text-align: center; margin-top: 20px;">
+                TOTAL DE KG LAVADO NA MÁQUINA 3: <span id="totalGeralKgLavado3">0</span> KG
+            </h3>
+
+            <div class="pagebreak"></div>
+
+            <h2 style="display: flex; align-items: center; justify-content: center;">
+                Máquina
+                <input type="text" id="inputMaquina1" placeholder="MÁQUINA" value="4"
+                    style="padding: 5px; font-size: 12px; margin-left: 10px; width: 150px;font-size: 12px;text-align: center;">
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Processo</th>
+                        <th>Executado (N.)</th>
+                        <th>Cancelado (N.)</th>
+                        <th>Capacidade (KG)</th>
+                        <th>Total Lavado (Kg)</th>
+                        <th>% de Lavagem</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela4">
+                    <tr id="linha1">
+                        <td><input type="text" style="width: 90%; " value="LEVE"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha2">
+                        <td><input type="text" style="width: 90%;" value="PESADO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha3">
+                        <td><input type="text" style="width: 90%;" value="COBERTOR"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha4">
+                        <td><input type="text" style="width: 90%;" value="PANO DE CHÃO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha5">
+                        <td><input type="text" style="width: 90%;" value="COMPRESSAS"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><span>0</span></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Texto para mostrar o total -->
+            <h3 style="text-align: center; margin-top: 20px;">
+                TOTAL DE KG LAVADO NA MÁQUINA 4: <span id="totalGeralKgLavado4">0</span> KG
+            </h3>
+
+            <h2 style="display: flex; align-items: center; justify-content: center;">
+                Máquina
+                <input type="text" id="inputMaquina1" placeholder="MÁQUINA" value="TOTAL GERAL"
+                    style="padding: 5px; font-size: 12px; margin-left: 10px; width: 150px;font-size: 12px;text-align: center;">
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Processo</th>
+                        <th>Executado (N.)</th>
+                        <th>Total Lavado (Kg)</th>
+                        <th>% de Lavagem</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela5">
+                    <tr id="linha1">
+                        <td><input type="text" style="width: 90%; " value="LEVE"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="somarTotalLavadoGeral(this)"></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha2">
+                        <td><input type="text" style="width: 90%;" value="PESADO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="somarTotalLavadoGeral(this)"></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha3">
+                        <td><input type="text" style="width: 90%;" value="COBERTOR"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="somarTotalLavadoGeral(this)"></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha4">
+                        <td><input type="text" style="width: 90%;" value="PANO DE CHÃO"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="somarTotalLavadoGeral(this)"></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                    <tr id="linha5">
+                        <td><input type="text" style="width: 90%;" value="COMPRESSAS"></td>
+                        <td><input type="number" style="width: 90%;" oninput="calcularTotalLavado(this)"></td>
+                        <td><input type="number" style="width: 90%;" oninput="somarTotalLavadoGeral(this)"></td>
+                        <td><span>0%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Texto para mostrar o total geral -->
+            <h3 style="text-align: center; margin-top: 20px;">
+                TOTAL DE KG LAVADO GERAL: <span id="totalGeralKgLavadogeral">0</span> KG
+            </h3>
+            <div>
+                <button id="imprimirBtn">Imprimir e Salvar como PDF</button>
+            </div>
+        </div>
+
+        <script>
+
+            // Função para calcular o total de dias entre datas
+            function calcularTotalDias() {
+                const dataInicial = new Date(document.getElementById('dataInicial').value);
+                const dataFinal = new Date(document.getElementById('dataFinal').value);
+
+                // Verifica se as datas são válidas
+
+                if (!isNaN(dataInicial) && !isNaN(dataFinal)) {
+                    const diffTime = Math.abs(dataFinal - dataInicial);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    document.getElementById('totalDias').textContent = diffDays;
+                } else {
+                    document.getElementById('totalDias').textContent = 0; // Reset se as datas não forem válidas
+                }
+            }
+
+            // Opcional: Adiciona os event listeners para atualizar automaticamente quando as datas mudarem
+            document.getElementById('dataInicial').addEventListener('change', calcularTotalDias);
+            document.getElementById('dataFinal').addEventListener('change', calcularTotalDias);
+
+
+            // Função para calcular o total lavado
+            function calcularTotalLavado(element) {
+                const tabela = element.closest('table'); // Obtém a tabela pai do elemento que disparou a função
+                const row = element.closest('tr'); // Pega a linha pai do elemento clicado
+
+                const inputs = row.querySelectorAll('input');
+                if (inputs.length < 4) {
+                    console.error("Inputs insuficientes na linha.");
+                    return;
+                }
+
+                const executado = Number(row.querySelectorAll('input')[1].value) || 0; // Valor do campo Executado ou 0 se estiver vazio
+                const cancelado = Number(row.querySelectorAll('input')[2].value) || 0; // Valor do campo Cancelado ou 0 se estiver vazio
+                const capacidade = Number(row.querySelectorAll('input')[3].value) || 1; // Valor do campo Capacidade ou 1 (evitar divisão por zero)
+
+                // Calcula o total lavado, garantindo que o valor mínimo seja zero (evitando valores negativos)
+                const totalLavado = Math.max((executado - cancelado) * capacidade, 0);
+
+                // Atualiza o campo de total lavado na linha
+                const totalLavadoCell = row.querySelector('span');
+                if (totalLavadoCell) {
+                    totalLavadoCell.textContent = totalLavado.toFixed(2);
+                }
+                console.log(`Executado: ${executado}, Cancelado: ${cancelado}, Capacidade: ${capacidade}, Total Lavado: ${totalLavado}`);
+                // Chama a função para calcular a porcentagem + chamar função para somar valores
+                calcularPorcentagem(tabela);
+                somarTotalLavadoTabela1();
+                somarTotalLavadoTabela2();
+                somarTotalLavadoTabela3();
+                somarTotalLavadoTabela4();
+                atualizarTotais();
+                calcularExecutadoTotal();
+                somarTotalLavadoGeral();
+                calcularPercentualLavagem();
+            }
+
+            // Função para calcular a porcentagem
+            function calcularPorcentagem(tabela) {
+                const rows = tabela.querySelectorAll('tr');
+                let totalLavadoGeral = 0;
+
+                // Primeiro, calcular o total lavado para todas as linhas da tabela
+                rows.forEach(row => {
+                    const inputs = row.querySelectorAll('input');
+                    if (inputs.length < 4) return; // Ignora linhas sem inputs suficientes
+
+                    const executado = Number(inputs[1].value) || 0;
+                    const cancelado = Number(inputs[2].value) || 0;
+                    const capacidade = Number(inputs[3].value) || 1;
+                    const totalLavado = Math.max((executado - cancelado) * capacidade, 0);
+
+                    totalLavadoGeral += totalLavado; // Somar ao total geral
+                    const totalLavadoCell = row.querySelector('span');
+                    if (totalLavadoCell) {
+                        totalLavadoCell.textContent = totalLavado.toFixed(2); // Atualiza o total lavado na linha
+                    }
+                });
+
+                // Agora, calcular a porcentagem para cada linha com base no total lavado geral
+                rows.forEach(row => {
+                    const totalLavadoCell = row.querySelector('span');
+                    const totalLavado = Number(totalLavadoCell?.textContent) || 0;
+                    const porcentagem = (totalLavadoGeral > 0) ? (totalLavado / totalLavadoGeral) * 100 : 0;
+
+                    // Atualizar a célula de porcentagem
+                    const porcentagemCell = row.querySelectorAll('span')[1]; // Segunda célula <span> na linha
+                    if (porcentagemCell) {
+                        porcentagemCell.textContent = porcentagem.toFixed(2) + '%';
+                    }
+                });
+            }
+
+            // SOMAR COLUNA TOTAL DE KG LAVADOS, E INFORMAR NA FRASE ABAIXO DA TABELA 1
+            function somarTotalLavadoTabela1() {
+                const tabela = document.getElementById("tabela1"); // ID da tabela 1
+                if (!tabela) {
+                    console.error("Tabela 1 não encontrada");
+                    return;
+                }
+
+                const linhas = tabela.getElementsByTagName('tr');
+                let total = 0;
+
+                for (let i = 0; i < linhas.length; i++) {  // Ignora a primeira linha (cabeçalho)
+                    const celulas = linhas[i].getElementsByTagName('td');
+
+                    // Verifica se a linha tem pelo menos 5 células (para evitar erro de índice)
+                    if (celulas.length >= 5) {
+                        const celula = celulas[4]; // Coluna 5 (index 4)
+                        const valorTexto = celula.textContent.trim();
+
+                        // Somente tenta somar se a célula não estiver vazia
+                        if (valorTexto !== "") {
+                            const valor = parseFloat(valorTexto);
+
+                            console.log(`Valor encontrado na tabela1, linha ${i}: '${valorTexto}'`);
+
+                            // Adiciona à soma apenas se o valor for válido (não NaN)
+                            if (!isNaN(valor)) {
+                                total += valor;
+                            } else {
+                                console.warn("Valor inválido na tabela1 na linha", i, ":", valorTexto);
+                            }
+                        }
+                    } else {
+                        console.warn("Linha ignorada (não tem 5 células): linha", i);
+                    }
+                }
+
+                const elementoTotal = document.getElementById("totalGeralKgLavado1"); // ID onde o total será exibido
+                if (elementoTotal) {
+                    elementoTotal.textContent = total.toFixed(2); // Exibe o total formatado com 2 casas decimais
+                    console.log(`Total para tabela1: ${total.toFixed(2)}`);
+                } else {
+                    console.error("Elemento de total não encontrado: totalGeralKgLavado1");
+                }
+            }
+
+
+            // SOMAR COLUNA TOTAL DE KG LAVADOS, E INFORMAR NA FRASE ABAIXO DA TABELA 2
+            function somarTotalLavadoTabela2() {
+                const tabela = document.getElementById("tabela2"); // ID da tabela 12
+                if (!tabela) {
+                    console.error("Tabela 2 não encontrada");
+                    return;
+                }
+
+                const linhas = tabela.getElementsByTagName('tr');
+                let total = 0;
+
+                for (let i = 0; i < linhas.length; i++) {  // Ignora a primeira linha (cabeçalho)
+                    const celulas = linhas[i].getElementsByTagName('td');
+
+                    // Verifica se a linha tem pelo menos 5 células (para evitar erro de índice)
+                    if (celulas.length >= 5) {
+                        const celula = celulas[4]; // Coluna 5 (index 4)
+                        const valorTexto = celula.textContent.trim();
+
+                        // Somente tenta somar se a célula não estiver vazia
+                        if (valorTexto !== "") {
+                            const valor = parseFloat(valorTexto);
+
+                            console.log(`Valor encontrado na tabela2, linha ${i}: '${valorTexto}'`);
+
+                            // Adiciona à soma apenas se o valor for válido (não NaN)
+                            if (!isNaN(valor)) {
+                                total += valor;
+                            } else {
+                                console.warn("Valor inválido na tabela2 na linha", i, ":", valorTexto);
+                            }
+                        }
+                    } else {
+                        console.warn("Linha ignorada (não tem 5 células): linha", i);
+                    }
+                }
+
+                const elementoTotal = document.getElementById("totalGeralKgLavado2"); // ID onde o total será exibido
+                if (elementoTotal) {
+                    elementoTotal.textContent = total.toFixed(2); // Exibe o total formatado com 2 casas decimais
+                    console.log(`Total para tabela2: ${total.toFixed(2)}`);
+                } else {
+                    console.error("Elemento de total não encontrado: totalGeralKgLavado2");
+                }
+            }
+
+            // SOMAR COLUNA TOTAL DE KG LAVADOS, E INFORMAR NA FRASE ABAIXO DA TABELA 3
+            function somarTotalLavadoTabela3() {
+                const tabela = document.getElementById("tabela3"); // ID da tabela 123
+                if (!tabela) {
+                    console.error("Tabela 3 não encontrada");
+                    return;
+                }
+
+                const linhas = tabela.getElementsByTagName('tr');
+                let total = 0;
+
+                for (let i = 0; i < linhas.length; i++) {  // Ignora a primeira linha (cabeçalho)
+                    const celulas = linhas[i].getElementsByTagName('td');
+
+                    // Verifica se a linha tem pelo menos 5 células (para evitar erro de índice)
+                    if (celulas.length >= 5) {
+                        const celula = celulas[4]; // Coluna 5 (index 4)
+                        const valorTexto = celula.textContent.trim();
+
+                        // Somente tenta somar se a célula não estiver vazia
+                        if (valorTexto !== "") {
+                            const valor = parseFloat(valorTexto);
+
+                            console.log(`Valor encontrado na tabela3, linha ${i}: '${valorTexto}'`);
+
+                            // Adiciona à soma apenas se o valor for válido (não NaN)
+                            if (!isNaN(valor)) {
+                                total += valor;
+                            } else {
+                                console.warn("Valor inválido na tabela3 na linha", i, ":", valorTexto);
+                            }
+                        }
+                    } else {
+                        console.warn("Linha ignorada (não tem 5 células): linha", i);
+                    }
+                }
+
+                const elementoTotal = document.getElementById("totalGeralKgLavado3"); // ID onde o total será exibido
+                if (elementoTotal) {
+                    elementoTotal.textContent = total.toFixed(2); // Exibe o total formatado com 2 casas decimais
+                    console.log(`Total para tabela3: ${total.toFixed(2)}`);
+                } else {
+                    console.error("Elemento de total não encontrado: totalGeralKgLavado3");
+                }
+            }
+
+            // SOMAR COLUNA TOTAL DE KG LAVADOS, E INFORMAR NA FRASE ABAIXO DA TABELA 4
+            function somarTotalLavadoTabela4() {
+                const tabela = document.getElementById("tabela4"); // ID da tabela 1234
+                if (!tabela) {
+                    console.error("Tabela 4 não encontrada");
+                    return;
+                }
+
+                const linhas = tabela.getElementsByTagName('tr');
+                let total = 0;
+
+                for (let i = 0; i < linhas.length; i++) {  // Ignora a primeira linha (cabeçalho)
+                    const celulas = linhas[i].getElementsByTagName('td');
+
+                    // Verifica se a linha tem pelo menos 5 células (para evitar erro de índice)
+                    if (celulas.length >= 5) {
+                        const celula = celulas[4]; // Coluna 5 (index 4)
+                        const valorTexto = celula.textContent.trim();
+
+                        // Somente tenta somar se a célula não estiver vazia
+                        if (valorTexto !== "") {
+                            const valor = parseFloat(valorTexto);
+
+                            console.log(`Valor encontrado na tabela4, linha ${i}: '${valorTexto}'`);
+
+                            // Adiciona à soma apenas se o valor for válido (não NaN)
+                            if (!isNaN(valor)) {
+                                total += valor;
+                            } else {
+                                console.warn("Valor inválido na tabela4 na linha", i, ":", valorTexto);
+                            }
+                        }
+                    } else {
+                        console.warn("Linha ignorada (não tem 5 células): linha", i);
+                    }
+                }
+
+                const elementoTotal = document.getElementById("totalGeralKgLavado4"); // ID onde o total será exibido
+                if (elementoTotal) {
+                    elementoTotal.textContent = total.toFixed(2); // Exibe o total formatado com 2 casas decimais
+                    console.log(`Total para tabela4: ${total.toFixed(2)}`);
+                } else {
+                    console.error("Elemento de total não encontrado: totalGeralKgLavado4");
+                }
+            }
+
+            // Executa o cálculo quando a página carregar
+            window.onload = somarTotalLavadoTabela1();
+
+            // GERAR ARQUIVO PDF 
+            document.getElementById("imprimirBtn").addEventListener("click", function () {
+                const btn = this;
+
+                // Atualiza o texto do botão para mostrar que o PDF está sendo gerado
+                btn.textContent = "Gerando PDF...";
+
+                // Esconde o botão
+                btn.style.display = 'none';
+
+                // Verifica se o campo NomeCliente existe
+                const nomeClienteInput = document.getElementById("NomeCliente");
+                if (!nomeClienteInput) {
+                    console.error("O campo de nome do cliente (NomeCliente) não foi encontrado.");
+                    btn.style.display = 'inline'; // Exibe o botão novamente
+                    return;
+                }
+
+                const nomeCliente = nomeClienteInput.value; // Pega o valor do campo de nome do cliente
+                const dataInicialInput = document.getElementById("dataInicial");
+                const dataFinalInput = document.getElementById("dataFinal");
+
+                // Obtém as datas do input
+                const dataInicial = dataInicialInput.value; // Data inicial do input
+                const dataFinal = dataFinalInput.value; // Data final do input
+
+                // Verifica se o nome do cliente foi preenchido
+                if (!nomeCliente) {
+                    alert("Por favor, insira o nome do cliente.");
+                    btn.style.display = 'inline'; // Exibe o botão novamente
+                    return;
+                }
+
+                // Verifica se as datas foram preenchidas
+                if (!dataInicial || !dataFinal) {
+                    alert("Por favor, insira as datas inicial e final.");
+                    btn.style.display = 'inline'; // Exibe o botão novamente
+                    return;
+                }
+
+                // Log no console para verificar os valores
+                console.log(`Nome do Cliente: ${nomeCliente}`);
+                console.log(`Data Inicial: ${dataInicial}`);
+                console.log(`Data Final: ${dataFinal}`);
+
+                // Elemento que contém o relatório completo
+                const conteudoRelatorio = document.getElementById("conteudoRelatorio"); // Certifique-se que este é o ID correto da sua div com o relatório
+
+                // Gera o PDF a partir do conteúdo HTML usando html2pdf
+                const opt = {
+                    margin: 0.5, // Margens menores
+                    filename: `Relatório de Lavanderia - ${nomeCliente} - ${dataInicial} a ${dataFinal}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 1.5 }, // Ajustar escala
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                    //pagebreak: { mode: 'avoid' } // Evitar quebras de página
+
+                };
+
+                // Gera e salva o PDF no tamanho A4
+                html2pdf().from(conteudoRelatorio).set(opt).save().then(() => {
+                    // Torna o botão visível novamente após a geração do PDF
+                    btn.style.display = 'inline';
+                }).catch(err => {
+                    console.error("Erro ao gerar PDF:", err);
+                    btn.style.display = 'inline';
+                });
+            });
+
+
+            // Função para atualizar o total geral
+            function atualizarTotais() {
+                // Pega os valores dos totais individuais
+                const total1 = parseFloat(document.getElementById("totalGeralKgLavado1").textContent) || 0;
+                const total2 = parseFloat(document.getElementById("totalGeralKgLavado2").textContent) || 0;
+                const total3 = parseFloat(document.getElementById("totalGeralKgLavado3").textContent) || 0;
+                const total4 = parseFloat(document.getElementById("totalGeralKgLavado4").textContent) || 0;
+
+                // Soma todos os totais
+                const totalGeral = total1 + total2 + total3 + total4;
+
+                // Atualiza o total geral na tela
+                document.getElementById("totalGeralKgLavadogeral").textContent = totalGeral.toFixed(2);
+
+
+            }
+
+            // Função que pode ser chamada quando os valores são atualizados
+            function valoresAtualizados() {
+                // Chame esta função sempre que os totais individuais forem atualizados
+                atualizarTotalGeral();
+                calcularExecutadoTotal();
+                somarTotalLavadoGeral();
+                calcularPercentualLavagem();
+            }
+
+            function calcularExecutadoTotal() {
+                // Obtemos todos os processos na tabela5
+                const processosTabela5 = document.querySelectorAll("#tabela5 tr"); // Considerando que a tabela tem cabeçalho
+
+                // Para cada linha na tabela5, calculamos o total executado
+                processosTabela5.forEach((linhaTabela5) => {
+                    const processo = linhaTabela5.querySelector("td input").value; // Nome do processo na tabela5
+                    let totalExecutado = 0; // Inicializa a soma do total executado
+
+                    // Log para verificar o processo atual
+                    console.log(`Processo atual na tabela5: ${processo}`);
+
+                    // Soma os valores executados nas outras tabelas
+                    for (let i = 1; i <= 4; i++) { // Loop através de tabela1 a tabela4
+                        const tabela = document.getElementById(`tabela${i}`); // Correção aqui
+                        if (tabela) {
+                            const linhasTabela = tabela.querySelectorAll("tr");
+
+                            linhasTabela.forEach((linha) => {
+                                const processoTabela = linha.querySelector("td:first-child input").value; // Nome do processo na tabela
+                                const executado = Number(linha.querySelector("td:nth-child(2) input").value) || 0; // Valor executado
+
+                                // Verifica se o processo atual é igual ao da tabela
+                                if (processoTabela === processo) {
+                                    totalExecutado += executado; // Soma ao total executado
+                                }
+                            });
+                        } else {
+                            console.error(`Tabela ${i} não encontrada.`); // Correção aqui
+                        }
+                    }
+
+                    // Atualiza o campo Executado na tabela5
+                    const campoExecutado = linhaTabela5.querySelector("td:nth-child(2) input");
+                    if (campoExecutado) {
+                        campoExecutado.value = totalExecutado; // Atualiza o valor
+                        console.log(`Total Executado para ${processo}: ${totalExecutado}`); // Correção aqui
+                    } else {
+                        console.error("Campo Executado não encontrado na linha da tabela5.");
+                    }
+                });
+            }
+
+            // Chame a função calcularExecutadoTotal sempre que o valor do input mudar
+            calcularExecutadoTotal();
+
+            function somarTotalLavadoGeral() {
+                // Obtemos todos os processos na tabela5
+                const processosTabela5 = document.querySelectorAll("#tabela5 tr"); // Considerando que a tabela tem cabeçalho
+
+                // Para cada linha na tabela5, calculamos o total lavado
+                processosTabela5.forEach((linhaTabela5) => {
+                    const processo = linhaTabela5.querySelector("td input").value; // Nome do processo na tabela5
+                    let totalLavado = 0; // Inicializa a soma do total lavado
+
+                    // Log para verificar o processo atual
+                    console.log(`Processo atual na tabela5: ${processo}`);
+
+                    // Soma os valores lavados nas outras tabelas
+                    for (let i = 1; i <= 4; i++) { // Loop através de tabela1 a tabela4
+                        const tabela = document.getElementById(`tabela${i}`); // Obtemos a tabela
+                        if (tabela) {
+                            const linhasTabela = tabela.querySelectorAll("tr");
+
+                            linhasTabela.forEach((linha) => {
+                                const processoTabela = linha.querySelector("td:first-child input").value; // Nome do processo na tabela
+                                const lavado = Number(linha.querySelector("td:nth-child(5) span").innerText) || 0; // Valor lavado do <span>
+
+                                // Verifica se o processo atual é igual ao da tabela
+                                if (processoTabela === processo) {
+                                    totalLavado += lavado; // Soma ao total lavado
+                                }
+                            });
+                        } else {
+                            console.error(`Tabela ${i} não encontrada.`); // Log de erro se a tabela não for encontrada
+                        }
+                    }
+
+                    // Atualiza o campo Total Lavado na tabela5
+                    const campoTotalLavado = linhaTabela5.querySelector("td:nth-child(3) input");
+                    if (campoTotalLavado) {
+                        campoTotalLavado.value = totalLavado.toFixed(2); // Atualiza o valor total lavado com duas casas decimais
+                        console.log(`Total Lavado para ${processo}: ${totalLavado.toFixed(2)}`); // Log para verificar
+                    } else {
+                        console.error("Campo Total Lavado não encontrado na linha da tabela5.");
+                    }
+                });
+            }
+            // Chame a função somarTotalLavadoGeral sempre que o valor do input mudar
+            somarTotalLavadoGeral();
+
+            function calcularPercentualLavagem() {
+                // Obtemos todos os processos na tabela5
+                const processosTabela5 = document.querySelectorAll("#tabela5 tr"); // Considerando que a tabela tem cabeçalho
+                let totalGeralLavado = 0; // Inicializa a soma do total lavado
+
+                // Primeiro, calcula o total geral de "Total Lavado (Kg)"
+                processosTabela5.forEach((linhaTabela5) => {
+                    const totalLavado = Number(linhaTabela5.querySelector("td:nth-child(3) input").value) || 0; // Valor total lavado da linha
+                    totalGeralLavado += totalLavado; // Soma ao total geral
+                });
+
+                // Agora, calcula a porcentagem para cada linha
+                processosTabela5.forEach((linhaTabela5) => {
+                    const totalLavado = Number(linhaTabela5.querySelector("td:nth-child(3) input").value) || 0; // Valor total lavado da linha
+                    const percentualLavagem = totalGeralLavado > 0 ? (totalLavado / totalGeralLavado) * 100 : 0; // Cálculo da porcentagem
+
+                    // Atualiza o campo "% de Lavagem" na tabela5
+                    const campoPercentual = linhaTabela5.querySelector("td:nth-child(4) span"); // A coluna "% de Lavagem" é um span
+                    if (campoPercentual) {
+                        campoPercentual.textContent = percentualLavagem.toFixed(2) + '%'; // Atualiza o valor percentual
+                        console.log(`% de Lavagem para ${linhaTabela5.querySelector("td input").value}: ${percentualLavagem.toFixed(2)}%`); // Log para verificar
+                    } else {
+                        console.error("Campo % de Lavagem não encontrado na linha da tabela5.");
+                    }
+                });
+            }
+
+            // Chame a função calcularPercentualLavagem sempre que o valor do input mudar
+            calcularPercentualLavagem();
+
+
+
+        </script>
+</body>
+
+</html>
